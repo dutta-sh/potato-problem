@@ -4,7 +4,7 @@ import org.demo.dto.PotatoBag;
 
 import java.util.List;
 
-public interface IRespositoryService {
+public interface IRepositoryService {
 
     PotatoBag addToRepo(PotatoBag bag);
     List<PotatoBag> getFromRepo();

@@ -3,7 +3,7 @@ package org.demo.service;
 import lombok.extern.log4j.Log4j2;
 import org.demo.dto.PotatoBag;
 import org.demo.interfaces.IMarketService;
-import org.demo.interfaces.IRespositoryService;
+import org.demo.interfaces.IRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class MarketService implements IMarketService {
     private int defaultBagCount;
 
     @Autowired
-    private IRespositoryService respositoryService;
+    private IRepositoryService repositoryService;
 
     @Override
     public PotatoBag addBagToMarket(PotatoBag bag) throws Exception {
@@ -47,7 +47,7 @@ public class MarketService implements IMarketService {
         if(!suppliers.contains(bag.getSupplier()))
             throw new Exception("Supplier is invalid");
 
-        bag = respositoryService.addToRepo(bag);
+        bag = repositoryService.addToRepo(bag);
         return bag;
     }
 
@@ -58,11 +58,11 @@ public class MarketService implements IMarketService {
             count = defaultBagCount;
 
         List<PotatoBag> bagsOnSale = new ArrayList<>();
-        if(respositoryService.getFromRepo().size() <= count) {
-            bagsOnSale.addAll(respositoryService.getFromRepo());
+        if(repositoryService.getFromRepo().size() <= count) {
+            bagsOnSale.addAll(repositoryService.getFromRepo());
         } else {
             for(int i = 0; i < count; i++) {
-                bagsOnSale.add(respositoryService.getFromRepo().get(i));
+                bagsOnSale.add(repositoryService.getFromRepo().get(i));
             }
         }
         return bagsOnSale;

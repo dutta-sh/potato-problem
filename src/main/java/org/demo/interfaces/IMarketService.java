@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IMarketService {
 
-    PotatoBag addBagToMarket(PotatoBag bagDTO) throws Exception;
+    PotatoBag addBagToMarket(PotatoBag bag) throws Exception;
     List<PotatoBag> getBagsOnSale(Integer count);
     List<PotatoBag> getBagsOnSale();
 }
