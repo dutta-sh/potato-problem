@@ -30,6 +30,9 @@ public class MarketService implements IMarketService {
     @Value("#{'${bag.suppliers}'.split(',')}")
     private List<String> suppliers;
 
+    @Value("${rest.defaultBagCount}")
+    private int defaultBagCount;
+
     @Autowired
     private IRespositoryService respositoryService;
 
@@ -51,6 +54,9 @@ public class MarketService implements IMarketService {
     //return the count of bags requested or total size, whichever is smaller
     @Override
     public List<PotatoBag> getBagsOnSale(Integer count) {
+        if(count == null)
+            count = defaultBagCount;
+
         List<PotatoBag> bagsOnSale = new ArrayList<>();
         if(respositoryService.getFromRepo().size() <= count) {
             bagsOnSale.addAll(respositoryService.getFromRepo());
@@ -60,5 +66,10 @@ public class MarketService implements IMarketService {
             }
         }
         return bagsOnSale;
+    }
+
+    @Override
+    public List<PotatoBag> getBagsOnSale() {
+        return getBagsOnSale(defaultBagCount);
     }
 }

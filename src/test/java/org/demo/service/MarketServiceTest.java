@@ -45,7 +45,7 @@ public class MarketServiceTest {
 
     @Test(expected = Exception.class)
     public void addBagToMarketTestInvalidSupplier() throws Exception {
-        PotatoBag bag = PotatoBag.builder().potatoCount(25).price(75D).supplier("Idaho Potatoes").packDate(new Date()).build();
+        PotatoBag bag = PotatoBag.builder().potatoCount(25).price(25D).supplier("Idaho Potatoes").packDate(new Date()).build();
         marketService.addBagToMarket(bag);
     }
 
@@ -72,6 +72,9 @@ public class MarketServiceTest {
         List<PotatoBag> bags = marketService.getBagsOnSale(5);
         assertEquals(2, bags.size());
 
+        bags = marketService.getBagsOnSale();
+        assertEquals(2, bags.size());
+
         for(int i = 3; i <= 6; i++) {
             PotatoBag bag = PotatoBag.builder().uuid(UUID.randomUUID()).potatoCount(i*10).price(i*5D).supplier("Patatas Ruben").packDate(new Date()).build();
             repositoryService.addToRepo(bag);
@@ -79,5 +82,8 @@ public class MarketServiceTest {
 
         bags = marketService.getBagsOnSale(5);
         assertEquals(5, bags.size());
+
+        bags = marketService.getBagsOnSale();
+        assertEquals(3, bags.size());
     }
 }

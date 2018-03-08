@@ -8,4 +8,5 @@ public interface IMarketService {
 
     PotatoBag addBagToMarket(PotatoBag bagDTO) throws Exception;
     List<PotatoBag> getBagsOnSale(Integer count);
+    List<PotatoBag> getBagsOnSale();
 }

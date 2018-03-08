@@ -5,6 +5,7 @@ import org.demo.dto.PotatoBag;
 import org.demo.interfaces.IRespositoryService;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,12 @@ import java.util.UUID;
 public class RepositoryService implements IRespositoryService {
 
     private List<PotatoBag> bagsOnMarket = new ArrayList<>();
+
+    @PostConstruct
+    public void init() {
+        //PotatoBag bag = PotatoBag.builder().potatoCount(50).price(10D).supplier("De Coster").packDate(new Date()).build();
+        //addToRepo(bag);
+    }
 
     @Override
     public PotatoBag addToRepo(PotatoBag bag) {
