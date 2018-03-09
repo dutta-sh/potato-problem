@@ -1,5 +1,6 @@
 package org.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,6 @@ public class PotatoBag {
     private Integer potatoCount;
     private Double price;
     private String supplier;
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss aa z")
     private Date packDate;
 }

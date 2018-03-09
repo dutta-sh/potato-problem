@@ -1,6 +1,5 @@
 package org.demo.service;
 
-import lombok.extern.log4j.Log4j2;
 import org.demo.dto.PotatoBag;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@Log4j2
 public class RepositoryServiceTest {
 
     @Autowired
@@ -31,7 +29,7 @@ public class RepositoryServiceTest {
 
     @Test
     public void addToRepoTest() {
-        PotatoBag bag = PotatoBag.builder().potatoCount(25).price(10D).supplier("De Coster").packDate(new Date()).build();
+        PotatoBag bag = PotatoBag.builder().potatoCount(25).price(10D).supplier("Patatas Ruben").packDate(new Date()).build();
         bag = repositoryService.addToRepo(bag);
         assertNotNull(bag.getUuid());
 

@@ -16,26 +16,28 @@ import java.util.List;
 public class MarketService implements IMarketService {
 
     @Value("${bag.minPotatoCount}")
-    private int minPotatoCount;
+    private Integer minPotatoCount;
 
     @Value("${bag.maxPotatoCount}")
-    private int maxPotatoCount;
+    private Integer maxPotatoCount;
 
     @Value("${bag.minPrice}")
-    private int minPrice;
+    private Double minPrice;
 
     @Value("${bag.maxPrice}")
-    private int maxPrice;
+    private Double maxPrice;
 
     @Value("#{'${bag.suppliers}'.split(',')}")
     private List<String> suppliers;
 
     @Value("${rest.defaultBagCount}")
-    private int defaultBagCount;
+    private Integer defaultBagCount;
 
     @Autowired
     private IRepositoryService repositoryService;
 
+    //add to repository after validation
+    //if validation fails, throw exception
     @Override
     public PotatoBag addBagToMarket(PotatoBag bag) throws Exception {
         if(bag.getPotatoCount() < minPotatoCount || bag.getPotatoCount() > maxPotatoCount)
@@ -57,17 +59,20 @@ public class MarketService implements IMarketService {
         if(count == null)
             count = defaultBagCount;
 
+        List<PotatoBag> marketplace = repositoryService.getFromRepo();
         List<PotatoBag> bagsOnSale = new ArrayList<>();
-        if(repositoryService.getFromRepo().size() <= count) {
-            bagsOnSale.addAll(repositoryService.getFromRepo());
+        if(marketplace.size() <= count) {
+            log.warn("Returning all bags, since marketplace has " + marketplace.size() + " items, which is less than requested " + count);
+            bagsOnSale.addAll(marketplace);
         } else {
             for(int i = 0; i < count; i++) {
-                bagsOnSale.add(repositoryService.getFromRepo().get(i));
+                bagsOnSale.add(marketplace.get(i));
             }
         }
         return bagsOnSale;
     }
 
+    //return default count of bags (defined in props file) on sale
     @Override
     public List<PotatoBag> getBagsOnSale() {
         return getBagsOnSale(defaultBagCount);

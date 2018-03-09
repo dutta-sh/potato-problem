@@ -1,7 +1,6 @@
 package org.demo.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.log4j.Log4j2;
 import org.demo.dto.PotatoBag;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,17 +26,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Log4j2
 public class RestServiceTest {
 
     @Autowired
     private RestService restService;
+    @Autowired
+    private RepositoryService repositoryService;
     @Autowired
     MockMvc mockMvc;
 
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(restService).build();
+        repositoryService.reset();
     }
 
     @Test
@@ -59,7 +60,7 @@ public class RestServiceTest {
                 contentType(MediaType.APPLICATION_JSON)).
                 andDo(print()).
                 andExpect(status().isCreated()).
-                andExpect(content().string(containsString("\"potatoCount\":50,\"price\":10.0,\"supplier\":\"De Coster\",\"packDate\":1520546762249}],\"status\":\"" + ADD_TO_MARKET + "\"}")));
+                andExpect(content().string(containsString("\"potatoCount\":50,\"price\":10.0,\"supplier\":\"De Coster\",\"packDate\":\"2018-03-08 10:06:02 PM UTC\"}],\"status\":\"" + ADD_TO_MARKET + "\"}")));
 
     }
 
@@ -71,13 +72,15 @@ public class RestServiceTest {
                 andDo(print()).
                 andExpect(status().isBadRequest()).
                 andExpect(content().json("{" +
-                        "\"bags\":[" +
-                        "{" +
-                        "\"uuid\":null," +
-                        "\"potatoCount\":250," +
-                        "\"price\":10.0," +
-                        "\"supplier\":\"De Coster\"," +
-                        "\"packDate\":1520546762249}" +
+                        "\"bags\":" +
+                        "[" +
+                            "{" +
+                                "\"uuid\":null," +
+                                "\"potatoCount\":250," +
+                                "\"price\":10.0," +
+                                "\"supplier\":\"De Coster\"," +
+                                "\"packDate\":\"2018-03-08 10:06:02 PM UTC\"" +
+                            "}" +
                         "]," +
                         "\"status\":\"" + NOT_ADD_TO_MARKET + " - Potato count is invalid" +
                         "\"}"));

@@ -1,6 +1,5 @@
 package org.demo.service;
 
-import lombok.extern.log4j.Log4j2;
 import org.demo.dto.PotatoBag;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@Log4j2
 public class MarketServiceTest {
 
     @Autowired
@@ -54,7 +52,6 @@ public class MarketServiceTest {
         PotatoBag bag = PotatoBag.builder().potatoCount(50).price(10D).supplier("De Coster").packDate(new Date()).build();
 
         bag = marketService.addBagToMarket(bag);
-        log.info(bag);
         assertNotNull(bag.getUuid());
 
         List<PotatoBag> bags = repositoryService.getFromRepo();

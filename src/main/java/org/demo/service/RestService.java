@@ -1,5 +1,6 @@
 package org.demo.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.demo.dto.PotatoBag;
 import org.demo.dto.Response;
 import org.demo.interfaces.IMarketService;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@Log4j2
 public class RestService {
 
     public static final String HEALTH_STATUS = "potato market service is up";
@@ -32,7 +34,9 @@ public class RestService {
                 status(HEALTH_STATUS).
                 build();
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        log.debug("healthcheck response: " + response);
+
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,6 +47,7 @@ public class RestService {
         try {
             bag = marketService.addBagToMarket(bag);
         } catch (Exception e) {
+            log.error("Unable to add bag", e);
             status = NOT_ADD_TO_MARKET + " - " + e.getMessage();
         }
 
@@ -51,7 +56,9 @@ public class RestService {
                 status(status).
                 build();
 
-        return new ResponseEntity(response, status == ADD_TO_MARKET ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
+        log.info("addBag response: " + response);
+
+        return new ResponseEntity<Response>(response, status == ADD_TO_MARKET ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,7 +71,9 @@ public class RestService {
                 status(FETCHED_FROM_MARKET).
                 build();
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        log.debug("getBags response: " + response);
+
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/get/{count}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,6 +86,8 @@ public class RestService {
                 status(FETCHED_FROM_MARKET).
                 build();
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        log.debug("getBags(" + count + ") response: " + response);
+
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 }

@@ -4,14 +4,23 @@
         <Console name="CONSOLE" target="SYSTEM_OUT">
             <PatternLayout pattern="%d | %-5p | %-24.24c{1} | %-10t | %m%n" />
         </Console>
+
+        <RollingFile name="FILE" fileName="potato-app.log" filePattern="potato-app-%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout pattern="%d | %-5p | %-24.24c{1} | %-10t | %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
-        <logger name="org.demo" level="INFO" additivity="false">
+        <logger name="org.demo" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="FILE"/>
         </logger>
+
         <Root level="INFO">
-            <AppenderRef ref="CONSOLE" level="INFO"/>
+            <AppenderRef ref="CONSOLE"/>
         </Root>
     </Loggers>
 </Configuration>
