@@ -67,7 +67,7 @@ public class RestServiceTest {
     @Test
     public void addBadTest() throws Exception {
         mockMvc.perform(post("/add").
-                content(new ObjectMapper().writeValueAsString(PotatoBag.builder().potatoCount(250).price(10D).supplier("De Coster").packDate(new Date(1520546762249L)).build())).
+                content(new ObjectMapper().writeValueAsString(PotatoBag.builder().potatoCount(250).price(-10D).supplier("XYZ").packDate(new Date(1520546762249L)).build())).
                 contentType(MediaType.APPLICATION_JSON)).
                 andDo(print()).
                 andExpect(status().isBadRequest()).
@@ -77,12 +77,12 @@ public class RestServiceTest {
                             "{" +
                                 "\"uuid\":null," +
                                 "\"potatoCount\":250," +
-                                "\"price\":10.0," +
-                                "\"supplier\":\"De Coster\"," +
+                                "\"price\":-10.0," +
+                                "\"supplier\":\"XYZ\"," +
                                 "\"packDate\":\"2018-03-08 10:06:02 PM UTC\"" +
                             "}" +
                         "]," +
-                        "\"status\":\"" + NOT_ADD_TO_MARKET + " - Potato count is invalid" +
+                        "\"status\":\"" + NOT_ADD_TO_MARKET + " - [Potato count is invalid, Price is invalid, Supplier is invalid]" +
                         "\"}"));
     }
 

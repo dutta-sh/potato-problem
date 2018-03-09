@@ -40,14 +40,19 @@ public class MarketService implements IMarketService {
     //if validation fails, throw exception
     @Override
     public PotatoBag addBagToMarket(PotatoBag bag) throws Exception {
+
+        List<String> errList = new ArrayList<>();
         if(bag.getPotatoCount() < minPotatoCount || bag.getPotatoCount() > maxPotatoCount)
-            throw new Exception("Potato count is invalid");
+            errList.add("Potato count is invalid");
 
         if(bag.getPrice() < minPrice || bag.getPrice() > maxPrice)
-            throw new Exception("Price is invalid");
+            errList.add("Price is invalid");
 
         if(!suppliers.contains(bag.getSupplier()))
-            throw new Exception("Supplier is invalid");
+            errList.add("Supplier is invalid");
+
+        if(!errList.isEmpty())
+            throw new Exception(errList.toString());
 
         bag = repositoryService.addToRepo(bag);
         return bag;
