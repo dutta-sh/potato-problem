@@ -3,6 +3,7 @@ package org.demo.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.demo.dto.PotatoBag;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Ignore
 public class RestServiceTest {
 
     @Autowired

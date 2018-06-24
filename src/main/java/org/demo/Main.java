@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args).registerShutdownHook();
+        SpringApplication.run(Main.class, args);
         log.info("--------------------- started application --------------------------");
     }
 }
