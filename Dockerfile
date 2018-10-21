@@ -13,6 +13,5 @@ RUN mkdir app
 WORKDIR /app
 
 EXPOSE 8080
-COPY /target/potato-problem.jar apps
+COPY /potato-problem.jar apps
 CMD java -jar potato-problem.jar
-
