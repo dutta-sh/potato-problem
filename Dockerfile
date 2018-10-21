@@ -1,4 +1,4 @@
-FROM Ubuntu
+FROM ubuntu
 
 # Install OpenJDK-8
 RUN apt-get update && \
